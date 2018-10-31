@@ -1,0 +1,18 @@
+This is my second project.
+
+To do:
+
+1. Using the jQuery library
+2. Interact with the HTML using events (such as a click)
+3. Take input from the user
+4. Update and edit HTML with jQuery
+5. Nice looking HTML + CSS to go along with the jQuery
+6. Have some sort of computed logic in it
+
+Here's the project.
+
+The user clicks on the type of cat they own.
+
+The logic then suggests different books throughout history that the cat might enjoy.
+
+If the book is .... then .... (for some computed logic)
