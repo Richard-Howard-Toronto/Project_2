@@ -1,3 +1,12 @@
+
+function myFunction() {
+    document.body.style.backgroundColor = "#f3f3f3";
+    document.body.style.backgroundImage = "url('tuxedo.jpg')";
+    document.body.style.repeat = "norepeat";
+}
+
+myFunction();
+
 // first thing first is to get a list of books
 
 function Book (title, author, pages, photos, timeofday) {
@@ -18,10 +27,12 @@ var Book6 = new Book ('War and Peace','Nick Tolstoy',40,true,'night');
 var Book7 = new Book ('Horse Whisperer','Nick Sparks',410,true,'day');
 var Book8 = new Book ('Free Willy','Unknown',420,true,'day');
 var Book9 = new Book ('Seal Island','Nick Stormsly',340,true,'day');
-var Book10 = new Book ('Otter Beach','Sue Swinner',140,false,'afternoon');
+var Book10 = new Book ('The Shining','Stephen King',540,false,'afternoon');
+
+const booklist = [Book1,Book2,Book3,Book4,Book5,Book6,Book7,Book8,Book9,Book10];
 
 
-// as cats are bad at choosing, a random number will make the choice of the book for them:
+// as cats are bad at choosing books, a random number will make the choice of the book for them:
 
 let rn = Math.random();
 if (rn < 0.1) {
@@ -48,6 +59,18 @@ if (rn < 0.1) {
   book = Book10
 }
 
+
+function showAllBooks() {
+
+    const book = booklist.map((book) => {
+    return book.title + ' by ' + book.author + ', (' + book.pages + ' pages)' + '  ';
+    });
+
+    var elTitle = document.getElementById('booklist');
+    elTitle.innerHTML = book;
+
+}
+
 // we want to know the time of day.  that lets us know which type of book to read
 
 function booksbyTime() {
@@ -56,8 +79,8 @@ function booksbyTime() {
   var hours = today.getHours();
   var minutes = today.getMinutes();
   $('footer#footerdate').text(`The time is: ${hours}:${minutes}`);
-    if (hours < 12) {
-      msg = 'Good day time reading examples';
+    if (hours < 12 && hours >= 0) {
+      msg = 'The time is: ' + hours + '\:'+ minutes +'. Suggested morning reading:';
       list = book.title + ' by ' + book.author ;
 
       if (book.timeofday == 'day') {
@@ -67,26 +90,25 @@ function booksbyTime() {
       }
 
 
-
     } else if (hours >= 12 && hours < 18) {
-      msg = 'Good books to read in the afternoon:';
+      msg = 'The time is: ' + hours + '\:'+ minutes +'. Suggested afternoon reading:';
       list = book.title + ' by ' + book.author;
 
       if (book.timeofday == 'afternoon') {
-        msg2 = 'good book for afternoon  reading'
+        msg2 = 'A good book for afternoon reading'
       } else {
-        msg2 = 'choose again!'
+        msg2 = 'Not recommended for afternoon reading'
       }
 
 
     } else {
-      msg = 'Night time books to read';
+      msg = 'The time is: ' + hours + '\:'+ minutes +' . Suggested evening reading:';
       list = book.title + ' by ' + book.author;
 
       if (book.timeofday == 'night') {
-        msg2 = 'good book for night reading'
+        msg2 = 'A good book for night reading'
       } else {
-        msg2 = 'as it is night time you may wish to choose something else'
+        msg2 = 'As it is night time you may wish to choose something less scary'
       }
 
     }
@@ -97,13 +119,20 @@ function booksbyTime() {
     elTitle.innerHTML = list + ', ' + msg2;
 }
 
+// hides the reload button until after you have made a choice.
+
+function showReloadButton() {
+  $('button#reload').css({
+    'visibility': 'visible',
+  });
+}
 
 
 // the user picks a cat.  It doesn't matter which, all cats can read:
 
 
 $('#tabby').on('click', function (){
-  $(this).text('Information on Tabby Cats');
+  $(this).text('Suggested Books for Tabby Cats');
   // here we are hiding the other cat types at they are no longer of interest
     $('#tortoiseshell').hide();
     $('#marmalade').hide();
@@ -111,14 +140,10 @@ $('#tabby').on('click', function (){
     $('#fancy').hide();
   // we call the function that presents us with different books based on the time of day
         booksbyTime();
+        showReloadButton();
 
-  // I could never get this to work.  I wanted the 'reload only to display once the cat was chosen'.  
-    $(function() {
-      $('button#reload').css({
-        'visibility': 'display',
-      });
-    });
   })
+
 
 
 $('#tortoiseshell').on('click', function (){
@@ -130,12 +155,14 @@ $('#tortoiseshell').on('click', function (){
     $('#fancy').hide();
   // we call the function that presents us with different books based on the time of day
         booksbyTime();
+        showReloadButton();
+
 })
 
 
 
 $('#marmalade').on('click', function (){
-  $(this).text('Information on Marmalade');
+  $(this).text('Suggested Books for Marmalade');
   // here we are hiding the other cat types at they are no longer of interest
     $('#tortoiseshell').hide();
     $('#tabby').hide();
@@ -143,11 +170,12 @@ $('#marmalade').on('click', function (){
     $('#fancy').hide();
   // we call the function that presents us with different books based on the time of day
         booksbyTime();
+        showReloadButton();
 })
 
 
 $('#tuxedo').on('click', function (){
-  $(this).text('Information on Tuxedo');
+  $(this).text('Suggested Books for Tuxedo');
   // here we are hiding the other cat types at they are no longer of interest
     $('#tortoiseshell').hide();
     $('#marmalade').hide();
@@ -155,21 +183,24 @@ $('#tuxedo').on('click', function (){
     $('#fancy').hide();
   // we call the function that presents us with different books based on the time of day
         booksbyTime();
+        showReloadButton();
 })
 
 
 $('#fancy').on('click', function (){
-  $(this).text('Information on Fancy');
+  $(this).text('All Books');
   // here we are hiding the other cat types at they are no longer of interest
     $('#tortoiseshell').hide();
     $('#marmalade').hide();
     $('#tuxedo').hide();
     $('#tabby').hide();
-  // we call the function that presents us with different books based on the time of day
-        booksbyTime();
+
+        showAllBooks();
+        showReloadButton();
+
 })
 
-
+// the reload button
 
 $('#reload').on('click', function (){
   location.reload();
