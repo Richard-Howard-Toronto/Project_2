@@ -5,7 +5,7 @@ function Book (title, author, pages, photos, timeofday) {
   this.author = author;
   this.pages = pages
   this.photos = ('');
-  this.timeofday = ('');
+  this.timeofday = timeofday;
 }
 
 
@@ -24,8 +24,6 @@ var Book10 = new Book ('Otter Beach','Sue Swinner',140,false,'afternoon');
 // as cats are bad at choosing, a random number will make the choice of the book for them:
 
 let rn = Math.random();
-let book = '';
-
 if (rn < 0.1) {
   book = Book1
 } else if (rn >= 0.0 && rn < 0.1) {
@@ -60,7 +58,7 @@ function booksbyTime() {
   $('footer#footerdate').text(`The time is: ${hours}:${minutes}`);
     if (hours < 12) {
       msg = 'Good day time reading examples';
-      list = book.title + ' by ' + book.author;
+      list = book.title + ' by ' + book.author ;
 
       if (book.timeofday == 'day') {
         msg2 = 'good book for daytime reading'
@@ -85,12 +83,10 @@ function booksbyTime() {
       msg = 'Night time books to read';
       list = book.title + ' by ' + book.author;
 
-      console.log(book.timeofday);
-
       if (book.timeofday == 'night') {
-        msg2 = 'good book for night'
+        msg2 = 'good book for night reading'
       } else {
-        msg2 = 'choose again!'
+        msg2 = 'as it is night time you may wish to choose something else'
       }
 
     }
@@ -101,7 +97,10 @@ function booksbyTime() {
     elTitle.innerHTML = list + ', ' + msg2;
 }
 
+
+
 // the user picks a cat.  It doesn't matter which, all cats can read:
+
 
 $('#tabby').on('click', function (){
   $(this).text('Information on Tabby Cats');
@@ -112,7 +111,14 @@ $('#tabby').on('click', function (){
     $('#fancy').hide();
   // we call the function that presents us with different books based on the time of day
         booksbyTime();
-})
+
+  // I could never get this to work.  I wanted the 'reload only to display once the cat was chosen'.  
+    $(function() {
+      $('button#reload').css({
+        'visibility': 'display',
+      });
+    });
+  })
 
 
 $('#tortoiseshell').on('click', function (){
