@@ -26,6 +26,12 @@ button#reload {
   visibility: hidden;
 }
 
+button {
+  color: blue;
+  /* doesn't work below*/
+  text-align: center;
+}
+
 footer {
   position: absolute;
   bottom: 1px;
@@ -35,13 +41,16 @@ footer {
 
 #main1 {
   color: yellow;
-
+  font-weight: bolder;
 }
 
 #main2 {
   color: yellow;
+  font-weight: bolder;
 }
 
+
+/* make the font smaller if the screen is smaller */
 
 @media only screen and (max-width: 600px) {
     body, button, #main1, #main2 {

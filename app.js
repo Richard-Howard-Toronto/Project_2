@@ -1,33 +1,38 @@
 
 function myFunction() {
-    document.body.style.backgroundColor = "#f3f3f3";
+    let h = window.innerHeight;
+    let w = window.innerWidth;
+    console.log(h);
+    console.log(w);
     document.body.style.backgroundImage = "url('tuxedo.jpg')";
-    document.body.style.repeat = "norepeat";
+    document.body.style.backgroundSize = "cover";
+
 }
 
 myFunction();
 
 // first thing first is to get a list of books
 
-function Book (title, author, pages, photos, timeofday) {
+function Book (title, author, pages, photos, timeofday, description) {
   this.title = title;
   this.author = author;
   this.pages = pages
   this.photos = ('');
   this.timeofday = timeofday;
+  this.description = description;
 }
 
 
-var Book1 = new Book ('Incredible Journey','Anne B. Gatto',200,true,'day');
-var Book2 = new Book ('Dog Day Afternoon for Cats','Al Pacino',300,false,'afternoon');
-var Book3 = new Book ('Day of the Triffidds','Creep Vinely',20,true,'day');
-var Book4 = new Book ('Polar Bears','Mr White',288,false,'night');
-var Book5 = new Book ('See Urchins','Nancy Prickly',40,true,'night');
-var Book6 = new Book ('War and Peace','Nick Tolstoy',40,true,'night');
-var Book7 = new Book ('Horse Whisperer','Nick Sparks',410,true,'day');
-var Book8 = new Book ('Free Willy','Unknown',420,true,'day');
-var Book9 = new Book ('Seal Island','Nick Stormsly',340,true,'day');
-var Book10 = new Book ('The Shining','Stephen King',540,false,'afternoon');
+var Book1 = new Book ('Incredible Journey','Anne B. Gatto',200,true,'day','they used many animals to film the three animals.');
+var Book2 = new Book ('Dog Day Afternoon for Cats','Al Pacino',300,false,'afternoon','Dogs take Cats hostage in a bank');
+var Book3 = new Book ('Day of the Triffidds','Creep Vinely',20,true,'day','Everyone escapes to the Isle of Wight, until someone points out that there are other islands out there.');
+var Book4 = new Book ('Polar Bears','Mr White',288,false,'night','');
+var Book5 = new Book ('See Urchins','Nancy Prickly',40,true,'night','');
+var Book6 = new Book ('War and Peace','Nick Tolstoy',40,true,'night','it is long and takes even longer to finish');
+var Book7 = new Book ('Horse Whisperer','Nick Sparks',410,true,'day','');
+var Book8 = new Book ('Free Willy','Unknown',420,true,'day',' Whale of a story.');
+var Book9 = new Book ('Seal Island','Nick Stormsly',340,true,'day',' Not sure if cats know much about seals.');
+var Book10 = new Book ('The Shining','Stephen King',540,false,'afternoon','description: basically, you do not want to work in a haunted hotel in the middle of winter.');
 
 const booklist = [Book1,Book2,Book3,Book4,Book5,Book6,Book7,Book8,Book9,Book10];
 
@@ -80,8 +85,8 @@ function booksbyTime() {
   var minutes = today.getMinutes();
   $('footer#footerdate').text(`The time is: ${hours}:${minutes}`);
     if (hours < 12 && hours >= 0) {
-      msg = 'The time is: ' + hours + '\:'+ minutes +'. Suggested morning reading:';
-      list = book.title + ' by ' + book.author ;
+      msg = 'The time is: ' + hours + '\:'+ minutes +'. Suggested reading:';
+      list = book.title + ' by ' + book.author + ' ' + book.description ;
 
       if (book.timeofday == 'day') {
         msg2 = 'good book for daytime reading'
@@ -91,8 +96,8 @@ function booksbyTime() {
 
 
     } else if (hours >= 12 && hours < 18) {
-      msg = 'The time is: ' + hours + '\:'+ minutes +'. Suggested afternoon reading:';
-      list = book.title + ' by ' + book.author;
+      msg = 'The time is: ' + hours + '\:'+ minutes +'. Suggested reading:';
+      list = book.title + ' by ' + book.author + ' ' + book.description;
 
       if (book.timeofday == 'afternoon') {
         msg2 = 'A good book for afternoon reading'
@@ -102,8 +107,8 @@ function booksbyTime() {
 
 
     } else {
-      msg = 'The time is: ' + hours + '\:'+ minutes +' . Suggested evening reading:';
-      list = book.title + ' by ' + book.author;
+      msg = 'The time is: ' + hours + '\:'+ minutes +' . Suggested reading:';
+      list = book.title + ' by ' + book.author + ' ' + book.description;
 
       if (book.timeofday == 'night') {
         msg2 = 'A good book for night reading'
@@ -117,6 +122,7 @@ function booksbyTime() {
 
     var elTitle = document.getElementById('booklist');
     elTitle.innerHTML = list + ', ' + msg2;
+
 }
 
 // hides the reload button until after you have made a choice.
@@ -141,7 +147,6 @@ $('#tabby').on('click', function (){
   // we call the function that presents us with different books based on the time of day
         booksbyTime();
         showReloadButton();
-
   })
 
 
@@ -156,7 +161,6 @@ $('#tortoiseshell').on('click', function (){
   // we call the function that presents us with different books based on the time of day
         booksbyTime();
         showReloadButton();
-
 })
 
 
@@ -189,7 +193,7 @@ $('#tuxedo').on('click', function (){
 
 $('#fancy').on('click', function (){
   $(this).text('All Books');
-  // here we are hiding the other cat types at they are no longer of interest
+  // list all books using the object book.
     $('#tortoiseshell').hide();
     $('#marmalade').hide();
     $('#tuxedo').hide();
@@ -201,7 +205,6 @@ $('#fancy').on('click', function (){
 })
 
 // the reload button
-
 $('#reload').on('click', function (){
   location.reload();
 })
